@@ -1,3 +1,4 @@
+import * as mongoose from 'mongoose';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -16,7 +17,10 @@ import { ConfigModule } from '@nestjs/config';
   providers: [AppService],
 })
 export class AppModule implements NestModule {
+  private readonly isDev: boolean = process.env.NODE === 'dev' ? true : false;
+
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('cats');
+    mongoose.set('debug', this.isDev);
   }
 }
