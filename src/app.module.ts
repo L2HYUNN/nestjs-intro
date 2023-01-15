@@ -17,7 +17,7 @@ import { ConfigModule } from '@nestjs/config';
   providers: [AppService],
 })
 export class AppModule implements NestModule {
-  private readonly isDev: boolean = process.env.NODE === 'dev' ? true : false;
+  private readonly isDev: boolean = process.env.MODE === 'dev' ? true : false;
 
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('cats');
